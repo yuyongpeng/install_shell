@@ -1,0 +1,16 @@
+#!/usr/bin/expect -f
+set OLD_PASS [lindex $argv 0 ]
+set NEW_PASS [lindex $argv 1 ]
+spawn mysql_secure_installation
+expect {
+"Set root password?" {send "\n"; exp_continue}
+"Enter current password for root (enter for none):" {send "\n"; exp_continue}
+"Change the root password?" {send "Y\n"; exp_continue}
+"New password:" {send "${NEW_PASS}\n"; exp_continue}
+"Re-enter new password:" {send "${NEW_PASS}\n"; exp_continue}
+"Remove anonymous users?" {send "Y\n"; exp_continue}
+"Disallow root login remotely?" {send "n\n"; exp_continue}
+"Remove test database and access to it?" {send "Y\n"; exp_continue}
+"Reload privilege tables now?" {send "Y\n"}
+}
+interact
