@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
-set OLD_PASS [lindex $argv 0 ]
-set NEW_PASS [lindex $argv 1 ]
+#set OLD_PASS [lindex $argv 0 ]
+set NEW_PASS [lindex $argv 0 ]
 spawn mysql_secure_installation
 expect {
 "Set root password?" {send "\n"; exp_continue}
