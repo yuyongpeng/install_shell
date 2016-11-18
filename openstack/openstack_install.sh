@@ -110,27 +110,8 @@ systemctl enable mariadb.service
 systemctl start mariadb.service
 
 cd $(dirname $0)
-expect -f ./mysql_secure_installation.exp
+expect -f ./mysql_secure_installation.exp ${MYSQL_ROOT_PASS}
 
-#expect<<END
-#spawn mysql_secure_installation
-#expect “Enter current password for root (enter for none):”
-#send "\n"
-#expect “Change the root password? [Y/n]”
-#send "Y\n"
-#expect “New password:”
-#send "${MYSQL_ROOT_PASS}\n"
-#expect “Re-enter new password:”
-#send "${MYSQL_ROOT_PASS}\n"
-#expect “Remove anonymous users? [Y/n]”
-#send "Y\n"
-#expect “Disallow root login remotely? [Y/n]”
-#send "n\n"
-#expect “Remove test database and access to it? [Y/n]”
-#send "Y\n"
-#expect “Reload privilege tables now? [Y/n]”
-#send "Y\n"
-#END
 #----------------------------[ 安装rabbitmq ]----------------------------------------
 yum install -y rabbitmq-server
 systemctl enable rabbitmq-server.service
