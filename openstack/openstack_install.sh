@@ -80,13 +80,20 @@ yum makecache
 yum -y update
 yum -y upgrade
 
+
+#----------------------------[ 安装hosts ]----------------------------------------
+controller_row=`cat /etc/hosts | grep controller | wc -l`
+if (( controller_row>=1 )); then
+	sed -i "s/.* controller/${CONTROLLER_MANAGE_IP}    controller/g" /etc/hosts
+else
+	echo "${CONTROLLER_MANAGE_IP}    controller" >> /etc/hosts
+fi
 #----------------------------[ 安装ntp ]----------------------------------------
 yum install -y chrony
 
 sed -i "s/#allow.*$/allow ${CONTROLLER_MANAGE_IP}\/24/g" /etc/chrony.conf
 systemctl enable chronyd.service
-systemctl start chronyd.service
-
+systemctl restart chronyd.service
 
 #----------------------------[ 安装安装openstack client和selinux的管理 ]----------------------------------------
 yum install -y python-openstackclient
@@ -107,22 +114,23 @@ character-set-server = utf8
 EOF
 
 systemctl enable mariadb.service
-systemctl start mariadb.service
+systemctl restart mariadb.service
 
 cd $(dirname $0)
 expect -f ./mysql_secure_installation.exp ${MYSQL_ROOT_PASS}
+sleep 3
 
 #----------------------------[ 安装rabbitmq ]----------------------------------------
 yum install -y rabbitmq-server
 systemctl enable rabbitmq-server.service
-systemctl start rabbitmq-server.service
+systemctl restart rabbitmq-server.service
 rabbitmqctl add_user openstack $RABBIT_PASS
 rabbitmqctl set_permissions openstack ".*" ".*" ".*"
 
 #----------------------------[ 安装memcached ]----------------------------------------
 yum install -y memcached python-memcached
 systemctl enable memcached.service
-systemctl start memcached.service
+systemctl restart memcached.service
 
 #----------------------------[ 安装openstack-utils ]----------------------------------------
 yum install -y openstack-utils
@@ -149,7 +157,7 @@ keystone-manage bootstrap --bootstrap-password ${ADMIN_PASS} \
 sed -i "s/#ServerName www.*$/ ServerName controller:80/g" /etc/httpd/conf/httpd.conf
 ln -s /usr/share/keystone/wsgi-keystone.conf /etc/httpd/conf.d/
 systemctl enable httpd.service
-systemctl start httpd.service
+systemctl restart httpd.service
 # 配置admin账号环境变量
 export OS_USERNAME=admin
 export OS_PASSWORD=${ADMIN_PASS}
