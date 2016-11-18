@@ -15,31 +15,33 @@ CONTROLLER_PUBLIC_IP=
 CONTROLLER_PUBLIC_IFNO=em2
 
 # 账号信息
-MYSQL_ROOT_PASS=1q2w3e4r
-#admin 用户密码
-ADMIN_PASS=1q2w3e4r
+MYSQL_ROOT_PASS=1q2w3e4
 #块设备存储服务的数据库密码
 CINDER_DBPASS=1q2w3e4r
-#块设备存储服务的 cinder 密码
-CINDER_PASS=1q2w3e4r
 #Database password for the dashboard
 DASH_DBPASS=1q2w3e4r
-#demo 用户的密码
-DEMO_PASS=1q2w3e4r
 #镜像服务的数据库密码
 GLANCE_DBPASS=1q2w3e4r
-#镜像服务的 glance 用户密码
-GLANCE_PASS=1q2w3e4r
 #认证服务的数据库密码
 KEYSTONE_DBPASS=1q2w3e4r
 #网络服务的数据库密码
 NEUTRON_DBPASS=1q2w3e4r
-#网络服务的 neutron 用户密码
-NEUTRON_PASS=1q2w3e4r
 #计算服务的数据库密码
 NOVA_DBPASS=1q2w3e4r
+
+#admin 用户密码
+ADMIN_PASS=1q2w3e4r
+#块设备存储服务的 cinder 密码
+CINDER_PASS=1q2w3e4r
+#demo 用户的密码
+DEMO_PASS=1q2w3e4r
+#镜像服务的 glance 用户密码
+GLANCE_PASS=1q2w3e4r
+#网络服务的 neutron 用户密码
+NEUTRON_PASS=1q2w3e4r
 #计算服务中``nova``用户的密码
 NOVA_PASS=1q2w3e4r
+
 #RabbitMQ的guest用户密码
 RABBIT_PASS=1q2w3e4r
 
@@ -81,7 +83,7 @@ yum -y update
 yum -y upgrade
 
 
-#----------------------------[ 安装hosts ]----------------------------------------
+#----------------------------[ 修改hosts ]----------------------------------------
 controller_row=`cat /etc/hosts | grep controller | wc -l`
 if (( controller_row>=1 )); then
 	sed -i "s/.* controller/${CONTROLLER_MANAGE_IP}    controller/g" /etc/hosts
@@ -117,7 +119,23 @@ systemctl enable mariadb.service
 systemctl restart mariadb.service
 
 cd $(dirname $0)
-expect -f ./mysql_secure_installation.exp ${MYSQL_ROOT_PASS}
+#expect -f ./mysql_secure_installation.exp ${MYSQL_ROOT_PASS}
+expect<<END
+spawn mysql_secure_installation
+expect {
+"Enter current password for root (enter for none): " {send "\n"; exp_continue}
+"Set root password?" {send "\n"; exp_continue}
+"Enter current password for root (enter for none):" {send "\n"; exp_continue}
+"Change the root password?" {send "Y\n"; exp_continue}
+"New password:" {send "${MYSQL_ROOT_PASS}\n"; exp_continue}
+"Re-enter new password:" {send "${MYSQL_ROOT_PASS}\n"; exp_continue}
+"Remove anonymous users?" {send "Y\n"; exp_continue}
+"Disallow root login remotely?" {send "n\n"; exp_continue}
+"Remove test database and access to it?" {send "Y\n"; exp_continue}
+"Reload privilege tables now?" {send "Y\n"}
+}
+interact
+END
 sleep 3
 
 #----------------------------[ 安装rabbitmq ]----------------------------------------
@@ -169,18 +187,17 @@ export OS_IDENTITY_API_VERSION=3
 
 openstack project create --domain default --description "Service Project" service
 openstack project create --domain default --description "Demo Project" demo
-openstack user create --domain default --password-prompt demo
+#openstack user create --domain default --password-prompt demo
+expect<<END
+spawn openstack user create --domain default --password-prompt demo
+expect "User Password:"
+send "${DEMO_PASS}\n"
+expect "Repeat User Password:"
+send "${DEMO_PASS}\n"
+END
 openstack role create user
 openstack role add --project demo --user demo user
 
-
-expect<<END
-spawn openstack user create --domain default --password-prompt demo4
-expect "User Password:"
-send "123456\n"
-expect "Repeat User Password:"
-send "123456\n"
-END
 #----------------------------[ 安装 ]----------------------------------------
 #----------------------------[ 安装 ]----------------------------------------
 #----------------------------[ 安装 ]----------------------------------------
@@ -209,3 +226,4 @@ END
 #----------------------------[ 安装 ]----------------------------------------
 #----------------------------[ 安装 ]----------------------------------------
 #----------------------------[ 安装 ]----------------------------------------
+MYSQL_ROOT_PASS=1q2w3e4r
