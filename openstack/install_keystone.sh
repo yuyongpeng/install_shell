@@ -38,18 +38,22 @@ export OS_USER_DOMAIN_NAME=default
 export OS_PROJECT_DOMAIN_NAME=default
 export OS_AUTH_URL=http://${CONTROLLER_HOSTNAME}:35357/v3
 export OS_IDENTITY_API_VERSION=3
-
+# 本指南使用一个你添加到你的环境中每个服务包含独有用户的service 项目。创建``service``项目：
 openstack project create --domain default --description "Service Project" service
+# 创建``demo`` 项目：
 openstack project create --domain default --description "Demo Project" demo
-#openstack user create --domain default --password-prompt demo
+# 创建``demo`` 用户：
 expect<<END
 spawn openstack user create --domain default --password-prompt demo
-expect "User Password:"
-send "${DEMO_PASS}\n"
-expect "Repeat User Password:"
-send "${DEMO_PASS}\n"
+expect {
+"User Password:" {send "${DEMO_PASS}\n"; exp_continue}
+"Repeat User Password:" {send "${DEMO_PASS}\n"}
+}
 END
+sleep 3
+# 创建 user 角色：
 openstack role create user
+# 添加 user``角色到 ``demo 项目和用户：
 openstack role add --project demo --user demo user
 
 # 创建 OpenStack 客户端环境脚本
