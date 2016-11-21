@@ -6,6 +6,7 @@
 #
 #
 cd $(dirname $0)
+. ./openstack_config.sh
 #----------------------------[ 验证keystone ]----------------------------------------
 vim /etc/keystone/keystone-paste.ini
 # 撤销临时环境变量``OS_AUTH_URL``和``OS_PASSWORD``
