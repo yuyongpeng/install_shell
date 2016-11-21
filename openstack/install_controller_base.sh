@@ -5,7 +5,8 @@
 # node = controller
 #
 #
-
+cd $(dirname $0)
+. ./openstack_config.sh
 #----------------------------[ 修改hosts ]----------------------------------------
 controller_row=`cat /etc/hosts | grep ${CONTROLLER_HOSTNAME} | wc -l`
 if (( controller_row>=1 )); then

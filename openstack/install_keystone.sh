@@ -5,7 +5,8 @@
 # node = controller
 #
 #
-
+cd $(dirname $0)
+. ./openstack_config.sh
 #----------------------------[ 安装keystone ]----------------------------------------
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "create database keystone default charset=utf8;"
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY '${KEYSTONE_DBPASS}';"
