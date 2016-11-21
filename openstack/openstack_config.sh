@@ -15,33 +15,34 @@ CONTROLLER_PUBLIC_IP=
 CONTROLLER_PUBLIC_IFNO=em2
 
 # 账号信息
-MYSQL_ROOT_PASS=1q2w3e4r
+MYSQL_ROOT_PASS=modernmedia
 #块设备存储服务的数据库密码
-CINDER_DBPASS=1q2w3e4r
+CINDER_DBPASS=modernmedia_cinder
 #Database password for the dashboard
-DASH_DBPASS=1q2w3e4r
+DASH_DBPASS=modernmedia_dash
 #镜像服务的数据库密码
-GLANCE_DBPASS=1q2w3e4r
+GLANCE_DBPASS=modernmedia_glance
 #认证服务的数据库密码
-KEYSTONE_DBPASS=1q2w3e4r
+KEYSTONE_DBPASS=modernmedia_keystone
 #网络服务的数据库密码
-NEUTRON_DBPASS=1q2w3e4r
+NEUTRON_DBPASS=modernmedia_neutron
 #计算服务的数据库密码
-NOVA_DBPASS=1q2w3e4r
+NOVA_DBPASS=modernmedia_nova
+NOVA_API_DBPASS=modernmedia_nova_api
 
 #admin 用户密码
-ADMIN_PASS=1q2w3e4r
+ADMIN_PASS=modernmediaOsAdmin
 #块设备存储服务的 cinder 密码
-CINDER_PASS=1q2w3e4r
+CINDER_PASS=modernmediaOsCinder
 #demo 用户的密码
-DEMO_PASS=1q2w3e4r
+DEMO_PASS=modernmediaOsDemo
 #镜像服务的 glance 用户密码
-GLANCE_PASS=1q2w3e4r
+GLANCE_PASS=modernmediaOsGlance
 #网络服务的 neutron 用户密码
-NEUTRON_PASS=1q2w3e4r
+NEUTRON_PASS=modernmediaOsNeutron
 #计算服务中``nova``用户的密码
-NOVA_PASS=1q2w3e4r
+NOVA_PASS=modernmediaOsNova
 
 #RabbitMQ的guest用户密码
-RABBIT_PASS=1q2w3e4r
+RABBIT_PASS=modernmediaRabbit
 
