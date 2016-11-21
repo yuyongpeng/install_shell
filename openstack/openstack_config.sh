@@ -8,7 +8,7 @@
 
 # 网络信息
 CONTROLLER_HOSTNAME=controller
-
+COMPUTE_HOSTNAME=compute1
 # 管理网段 ip
 CONTROLLER_MANAGE_IP=10.0.2.53
 CONTROLLER_MANAGE_IFNO=em1
@@ -18,6 +18,7 @@ CONTROLLER_PUBLIC_IFNO=em2
 
 # 账号信息
 MYSQL_ROOT_PASS=modernmedia
+MYSQL_ROOT_OLD_PASS=""
 #块设备存储服务的数据库密码
 CINDER_DBPASS=modernmedia_cinder
 #Database password for the dashboard

@@ -5,7 +5,7 @@
 # node = controller
 #
 #
-
+cd $(dirname $0)
 #----------------------------[ 验证keystone ]----------------------------------------
 vim /etc/keystone/keystone-paste.ini
 # 撤销临时环境变量``OS_AUTH_URL``和``OS_PASSWORD``

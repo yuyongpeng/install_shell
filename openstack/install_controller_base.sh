@@ -46,9 +46,8 @@ cd $(dirname $0)
 expect<<END
 spawn mysql_secure_installation
 expect {
-"Enter current password for root (enter for none): " {send "\n"; exp_continue}
+"Enter current password for root (enter for none): " {send "${MYSQL_ROOT_OLD_PASS}\n"; exp_continue}
 "Set root password?" {send "\n"; exp_continue}
-"Enter current password for root (enter for none):" {send "\n"; exp_continue}
 "Change the root password?" {send "Y\n"; exp_continue}
 "New password:" {send "${MYSQL_ROOT_PASS}\n"; exp_continue}
 "Re-enter new password:" {send "${MYSQL_ROOT_PASS}\n"; exp_continue}
