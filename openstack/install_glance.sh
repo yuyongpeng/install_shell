@@ -19,19 +19,20 @@ mysql -uroot -p${MYSQL_ROOT_PASS} -e "flush privileges;"
 #创建 glance 用户：
 expect<<END
 spawn openstack user create --domain default --password-prompt glance
-expect "User Password:"
-send "${GLANCE_PASS}\n"
-expect "Repeat User Password:"
-send "${GLANCE_PASS}\n"
+expect {
+"User Password:" {send "${GLANCE_PASS}\n"; exp_continue}
+"Repeat User Password:" {send "${GLANCE_PASS}\n"}
+}
 END
+
 #添加 admin 角色到 glance 用户和 service 项目上。
 openstack role add --project service --user glance admin
 #创建``glance``服务实体：
 openstack service create --name glance --description "OpenStack Image" image
 # 创建镜像服务的 API 端点：
-openstack endpoint create --region RegionOne image public http://${CONTROLLER_HOSTNAME}:9292
-openstack endpoint create --region RegionOne image internal http://${CONTROLLER_HOSTNAME}:9292
-openstack endpoint create --region RegionOne image admin http://${CONTROLLER_HOSTNAME}:9292
+openstack endpoint create --region ${REGION_NAME} image public http://${CONTROLLER_HOSTNAME}:9292
+openstack endpoint create --region ${REGION_NAME} image internal http://${CONTROLLER_HOSTNAME}:9292
+openstack endpoint create --region ${REGION_NAME} image admin http://${CONTROLLER_HOSTNAME}:9292
 
 yum install -y openstack-glance
 
