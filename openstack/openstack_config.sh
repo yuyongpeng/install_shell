@@ -49,3 +49,7 @@ NOVA_PASS=modernmediaOsNova
 #RabbitMQ的guest用户密码
 RABBIT_PASS=modernmediaRabbit
 
+# 客户端脚本存放路径
+OPENRC_PATH=/root
+OPENRC_ADMIN_USER=admin-openrc
+OPENRC_DEMO_USER=demo-openrc

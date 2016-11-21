@@ -52,3 +52,28 @@ END
 openstack role create user
 openstack role add --project demo --user demo user
 
+# 创建 OpenStack 客户端环境脚本
+touch ${OPENRC_PATH}/${OPENRC_ADMIN_USER}
+cat ${OPENRC_PATH}/${OPENRC_ADMIN_USER}<<END
+export OS_PROJECT_DOMAIN_NAME=default
+export OS_USER_DOMAIN_NAME=default
+export OS_PROJECT_NAME=admin
+export OS_USERNAME=admin
+export OS_PASSWORD=${ADMIN_PASS}
+export OS_AUTH_URL=http://${CONTROLLER_HOSTNAME}:35357/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
+END
+# 创建openstack客户端demo用户的环境脚本
+touch ${OPENRC_PATH}/${OPENRC_DEMO_USER}
+cat ${OPENRC_PATH}/${OPENRC_DEMO_USER}<<END
+export OS_PROJECT_DOMAIN_NAME=default
+export OS_USER_DOMAIN_NAME=default
+export OS_PROJECT_NAME=demo
+export OS_USERNAME=demo
+export OS_PASSWORD=${DEMO_PASS}
+export OS_AUTH_URL=http://${CONTROLLER_HOSTNAME}:5000/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
+END
+
