@@ -7,6 +7,8 @@
 #
 
 # 网络信息
+CONTROLLER_HOSTNAME=controller
+
 # 管理网段 ip
 CONTROLLER_MANAGE_IP=10.0.2.53
 CONTROLLER_MANAGE_IFNO=em1

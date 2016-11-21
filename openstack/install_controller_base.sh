@@ -7,11 +7,11 @@
 #
 
 #----------------------------[ 修改hosts ]----------------------------------------
-controller_row=`cat /etc/hosts | grep controller | wc -l`
+controller_row=`cat /etc/hosts | grep ${CONTROLLER_HOSTNAME} | wc -l`
 if (( controller_row>=1 )); then
-	sed -i "s/.* controller/${CONTROLLER_MANAGE_IP}    controller/g" /etc/hosts
+	sed -i "s/.* controller/${CONTROLLER_MANAGE_IP}    ${CONTROLLER_HOSTNAME}/g" /etc/hosts
 else
-	echo "${CONTROLLER_MANAGE_IP}    controller" >> /etc/hosts
+	echo "${CONTROLLER_MANAGE_IP}    ${CONTROLLER_HOSTNAME}" >> /etc/hosts
 fi
 #----------------------------[ 安装ntp ]----------------------------------------
 yum install -y chrony
