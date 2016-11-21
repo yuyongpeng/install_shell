@@ -50,15 +50,29 @@ expect {
 "Repeat User Password:" {send "${DEMO_PASS}\n"}
 }
 END
+
+# 创建 bbwc 项目
+openstack project create --domain default --description "${OPENSTACK_COMMON_PROJECTNAME} Project" ${OPENSTACK_COMMON_PROJECTNAME}
+# 创建bbwc项目下的普通用户
+expect<<END
+spawn openstack user create --domain default --password-prompt ${OPENSTACK_COMMON_USERNAME}
+expect {
+"User Password:" {send "${OPENSTACK_COMMON_USER_PASS}\n"; exp_continue}
+"Repeat User Password:" {send "${OPENSTACK_COMMON_USER_PASS}\n"}
+}
+END
 sleep 3
 # 创建 user 角色：
 openstack role create user
-# 添加 user``角色到 ``demo 项目和用户：
+# 将demo项目，demo用户，添加到 user角色
 openstack role add --project demo --user demo user
+# 将bbwc项目，bbwc用户，添加到 user角色
+openstack role add --project ${OPENSTACK_COMMON_PROJECTNAME} --user ${OPENSTACK_COMMON_USERNAME} user
 
 # 创建 OpenStack 客户端环境脚本
 touch ${OPENRC_PATH}/${OPENRC_ADMIN_USER}
 cat > ${OPENRC_PATH}/${OPENRC_ADMIN_USER}<<END
+#!/bin/bash
 export OS_PROJECT_DOMAIN_NAME=default
 export OS_USER_DOMAIN_NAME=default
 export OS_PROJECT_NAME=admin
@@ -71,6 +85,7 @@ END
 # 创建openstack客户端demo用户的环境脚本
 touch ${OPENRC_PATH}/${OPENRC_DEMO_USER}
 cat > ${OPENRC_PATH}/${OPENRC_DEMO_USER}<<END
+#!/bin/bash
 export OS_PROJECT_DOMAIN_NAME=default
 export OS_USER_DOMAIN_NAME=default
 export OS_PROJECT_NAME=demo
@@ -80,4 +95,16 @@ export OS_AUTH_URL=http://${CONTROLLER_HOSTNAME}:5000/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_IMAGE_API_VERSION=2
 END
-
+# 创建openstack客户端bbwc用户的环境脚本
+touch ${OPENRC_PATH}/${OPENSTACK_COMMON_USERNAME}-openrc
+cat > ${OPENRC_PATH}/${OPENSTACK_COMMON_USERNAME}-openrc<<END
+#!/bin/bash
+export OS_PROJECT_DOMAIN_NAME=default
+export OS_USER_DOMAIN_NAME=default
+export OS_PROJECT_NAME=${OPENSTACK_COMMON_PROJECTNAME}
+export OS_USERNAME=${OPENSTACK_COMMON_USERNAME}
+export OS_PASSWORD=${OPENSTACK_COMMON_USER_PASS}
+export OS_AUTH_URL=http://${CONTROLLER_HOSTNAME}:5000/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
+END

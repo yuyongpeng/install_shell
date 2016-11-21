@@ -53,3 +53,8 @@ RABBIT_PASS=modernmediaRabbit
 OPENRC_PATH=/root
 OPENRC_ADMIN_USER=admin-openrc
 OPENRC_DEMO_USER=demo-openrc
+
+#openstack keystone 普通用户
+OPENSTACK_COMMON_PROJECTNAME=bbwc_proj
+OPENSTACK_COMMON_USERNAME=bbwc
+OPENSTACK_COMMON_USER_PASS=bbwcModernmedia
