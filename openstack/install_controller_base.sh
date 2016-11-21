@@ -43,6 +43,7 @@ systemctl enable mariadb.service
 systemctl restart mariadb.service
 
 cd $(dirname $0)
+echo "+++++++++++++++++++++++++ ${MYSQL_ROOT_OLD_PASS} ++++++++++++++++++++++++++++++"
 #expect -f ./mysql_secure_installation.exp ${MYSQL_ROOT_PASS}
 expect<<END
 spawn mysql_secure_installation
