@@ -34,10 +34,10 @@ NOVA_API_DBPASS=modernmedia_nova_api
 
 #admin 用户密码
 ADMIN_PASS=modernmediaOsAdmin
-#块设备存储服务的 cinder 密码
-CINDER_PASS=modernmediaOsCinder
 #demo 用户的密码
 DEMO_PASS=modernmediaOsDemo
+#块设备存储服务的 cinder 密码
+CINDER_PASS=modernmediaOsCinder
 #镜像服务的 glance 用户密码
 GLANCE_PASS=modernmediaOsGlance
 #网络服务的 neutron 用户密码

@@ -13,7 +13,7 @@ mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON keystone.* TO 'key
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "flush privileges;"
 yum install -y openstack-keystone httpd mod_wsgi
 #配置keystone.conf
-openstack-config --set /etc/keystone/keystone.conf database connection mysql+pymysql://keystone:${KEYSTONE_DBPASS}@controller/keystone
+openstack-config --set /etc/keystone/keystone.conf database connection mysql+pymysql://keystone:${KEYSTONE_DBPASS}@${CONTROLLER_HOSTNAME}/keystone
 openstack-config --set /etc/keystone/keystone.conf token provider fernet
 # 初始化数据库
 su -s /bin/sh -c "keystone-manage db_sync" keystone
