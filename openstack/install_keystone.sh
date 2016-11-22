@@ -11,7 +11,7 @@ cd $(dirname $0)
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "create database keystone default charset=utf8;"
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY '${KEYSTONE_DBPASS}';"
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY '${KEYSTONE_DBPASS}';"
-mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON keystone* TO 'keystone'@'${CONTROLLER_HOSTNAM}' IDENTIFIED BY '${KEYSTONE_DBPAS}';"
+mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'${CONTROLLER_HOSTNAM}' IDENTIFIED BY '${KEYSTONE_DBPAS}';"
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "flush privileges;"
 yum install -y openstack-keystone httpd mod_wsgi
 #配置keystone.conf
