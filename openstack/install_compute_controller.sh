@@ -44,6 +44,7 @@ yum install -y openstack-nova-api openstack-nova-conductor openstack-nova-consol
 
 
 # 编辑``/etc/nova/nova.conf``文件
+penstack-config --set /etc/nova/nova.conf DEFAULT verbose True
 openstack-config --set /etc/nova/nova.conf database connection mysql+pymysql://glance:${GLANCE_DBPASS}@${CONTROLLER_HOSTNAME}/glance
 # 在``[DEFAULT]``部分，只启用计算和元数据API：
 openstack-config --set /etc/nova/nova.conf DEFAULT enabled_apis osapi_compute,metadata
