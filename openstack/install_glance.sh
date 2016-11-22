@@ -15,7 +15,6 @@ mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON glance.* TO 'glanc
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'${CONTROLLER_HOSTNAM}' IDENTIFIED BY '${GLACNE_DBPASS}';"
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "flush privileges;"
 
-
 # 获得访问权限
 . ${OPENRC_PATH}/${OPENRC_ADMIN_USER}
 #. /root/admin-openrc
