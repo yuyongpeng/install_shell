@@ -8,7 +8,6 @@
 cd $(dirname $0)
 . ./openstack_config.sh
 #----------------------------[ 安装计算服务的compute节点 ]----------------------------------------
-
 #安装软件包：
 yum install -y openstack-nova-compute 
 
