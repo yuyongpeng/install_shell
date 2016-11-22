@@ -11,9 +11,9 @@ cd $(dirname $0)
 keystone-paste=/etc/keystone/keystone-paste.in
 #vim /etc/keystone/keystone-paste.ini
 cp /etc/keystone/keystone-paste.ini /etc/keystone/keystone-paste.ini_bak
-openstack-config --set ${keystone-paste} pipeline:public_api pipeline "cors sizelimit http_proxy_to_wsgi osprofiler url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension public_service"
-openstack-config --set ${keystone-paste} pipeline:admin_api pipeline "cors sizelimit http_proxy_to_wsgi osprofiler url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension s3_extension admin_service"
-openstack-config --set ${keystone-paste} pipeline:api_v3 pipeline "cors sizelimit http_proxy_to_wsgi osprofiler url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension_v3 s3_extension service_v3"
+openstack-config --set ${keystone-paste} pipeline:public_api pipeline "cors sizelimit http_proxy_to_wsgi osprofiler url_normalize request_id build_auth_context token_auth json_body ec2_extension public_service"
+openstack-config --set ${keystone-paste} pipeline:admin_api pipeline "cors sizelimit http_proxy_to_wsgi osprofiler url_normalize request_id build_auth_context token_auth json_body ec2_extension s3_extension admin_service"
+openstack-config --set ${keystone-paste} pipeline:api_v3 pipeline "cors sizelimit http_proxy_to_wsgi osprofiler url_normalize request_id build_auth_context token_auth json_body ec2_extension_v3 s3_extension service_v3"
 
 # 撤销临时环境变量``OS_AUTH_URL``和``OS_PASSWORD``
 unset OS_AUTH_URL OS_PASSWORD
