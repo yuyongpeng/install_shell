@@ -6,7 +6,7 @@
 #
 #
 cd $(dirname $0)
-. ./openstack_config.sh
+. openstack_config.sh
 #----------------------------[ 安装镜像服务 ]----------------------------------------o
 # 初始化glance使用的数据库
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "create database glance default charset=utf8;"
@@ -15,7 +15,8 @@ mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON keystone.* TO 'gla
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "flush privileges;"
 
 # 获得访问权限
-. /root/admin-openrc
+. ${OPENRC_PATH}/${OPENRC_ADMIN_USER}
+#. /root/admin-openrc
 #创建 glance 用户：
 expect<<END
 spawn openstack user create --domain default --password-prompt glance
@@ -65,15 +66,7 @@ openstack-config --set /etc/glance/glance-registry.conf paste_deploy flavor keys
 su -s /bin/sh -c "glance-manage db_sync" glance
 # 启动镜像服务并将其配置为随机启动：
 systemctl enable openstack-glance-api.service  openstack-glance-registry.service
-systemctl start openstack-glance-api.service  openstack-glance-registry.service
+systemctl restart openstack-glance-api.service  openstack-glance-registry.service
 
-#验证glance安装
-. /root/admin-openrc
-cd /tmp
-wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
-openstack image create "cirros" \ 
- --file cirros-0.3.4-x86_64-disk.img \
- --disk-format qcow2 --container-format bare \
- --public
-openstack image list
+
 
