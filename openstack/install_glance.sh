@@ -10,8 +10,8 @@ cd $(dirname $0)
 #----------------------------[ 安装镜像服务 ]----------------------------------------o
 # 初始化glance使用的数据库
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "create database glance default charset=utf8;"
-mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON keystone.* TO 'glance'@'localhost' IDENTIFIED BY '${GLANCE_DBPASS}';"
-mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON keystone.* TO 'glance'@'%' IDENTIFIED BY '${GLACNE_DBPASS}';"
+mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY '${GLANCE_DBPASS}';"
+mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY '${GLACNE_DBPASS}';"
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "flush privileges;"
 
 # 获得访问权限
