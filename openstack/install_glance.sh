@@ -6,7 +6,7 @@
 #
 #
 cd $(dirname $0)
-. openstack_config.sh
+. ./openstack_config.sh
 #----------------------------[ 安装镜像服务 ]----------------------------------------o
 # 初始化glance使用的数据库
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "create database glance default charset=utf8;"
