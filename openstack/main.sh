@@ -12,3 +12,4 @@ cd $(dirname $0)
 . install_controller_base.sh
 . install_keystone.sh
 . install_glance.sh
+. install_compute_controller.sh
