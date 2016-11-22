@@ -8,7 +8,7 @@
 cd $(dirname $0)
 . ./openstack_config.sh
 #----------------------------[ 验证keystone ]----------------------------------------
-keystone-paste=/etc/keystone/keystone-paste.in
+keystone-paste=/etc/keystone/keystone-paste.ini
 #vim /etc/keystone/keystone-paste.ini
 cp /etc/keystone/keystone-paste.ini /etc/keystone/keystone-paste.ini_bak
 openstack-config --set ${keystone-paste} pipeline:public_api pipeline "cors sizelimit http_proxy_to_wsgi osprofiler url_normalize request_id build_auth_context token_auth json_body ec2_extension public_service"
