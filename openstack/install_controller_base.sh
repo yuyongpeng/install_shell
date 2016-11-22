@@ -8,9 +8,10 @@
 cd $(dirname $0)
 . ./openstack_config.sh
 #----------------------------[ 修改hosts ]----------------------------------------
+hostnamectl set-hostname ${CONTROLLER_HOSTNAME}
 controller_row=`cat /etc/hosts | grep ${CONTROLLER_HOSTNAME} | wc -l`
 if (( controller_row>=1 )); then
-	sed -i "s/.* controller/${CONTROLLER_MANAGE_IP}    ${CONTROLLER_HOSTNAME}/g" /etc/hosts
+	sed -i "s/.* ${CONTROLLER_HOSTNAME}/${CONTROLLER_MANAGE_IP}    ${CONTROLLER_HOSTNAME}/g" /etc/hosts
 else
 	echo "${CONTROLLER_MANAGE_IP}    ${CONTROLLER_HOSTNAME}" >> /etc/hosts
 fi
