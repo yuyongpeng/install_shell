@@ -11,8 +11,8 @@ cd $(dirname $0)
 # 初始化glance使用的数据库
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "create database glance default charset=utf8;"
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY '${GLANCE_DBPASS}';"
-mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY '${GLACNE_DBPASS}';"
-mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'${CONTROLLER_HOSTNAME}' IDENTIFIED BY '${GLACNE_DBPASS}';"
+mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY '${GLANCE_DBPASS}';"
+#mysql -uroot -p${MYSQL_ROOT_PASS} -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'${CONTROLLER_HOSTNAME}' IDENTIFIED BY '${GLANCE_DBPASS}';"
 mysql -uroot -p${MYSQL_ROOT_PASS} -e "flush privileges;"
 
 
@@ -34,8 +34,7 @@ openstack role add --project service --user glance admin
 openstack service create --name glance --description "OpenStack Image" image
 # 创建镜像服务的 API 端点：
 openstack endpoint create --region ${REGION_NAME} image public http://${CONTROLLER_HOSTNAME}:9292
-openstack endpoint create --region ${REGION_NAME} image internal http://${CONTROLLER_HOSTNAME}:9292
-openstack endpoint create --region ${REGION_NAME} image admin http://${CONTROLLER_HOSTNAME}:9292
+openstack endpoint create --region ${REGION_NAME} image internal http://${CONTROLLER_HOSTNAME}:9292openstack endpoint create --region ${REGION_NAME} image admin http://${CONTROLLER_HOSTNAME}:9292
 
 yum install -y openstack-glance
 
