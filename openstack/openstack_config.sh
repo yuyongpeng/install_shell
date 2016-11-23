@@ -63,3 +63,6 @@ OPENSTACK_COMMON_USER_PASS=bbwcModernmedia
 
 #区域名称
 REGION_NAME=RegionOne
+
+#卷组名称
+VOLUME_GROUP=cinder_volumes
