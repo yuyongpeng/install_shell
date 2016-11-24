@@ -48,6 +48,7 @@ NEUTRON_PASS=modernmediaOsNeutron
 #计算服务中``nova``用户的密码
 NOVA_PASS=modernmediaOsNova
 
+METADATA_SECRET=modernmediaOsMetadata
 #RabbitMQ的guest用户密码
 RABBIT_PASS=modernmediaRabbit
 
