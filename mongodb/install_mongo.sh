@@ -42,7 +42,9 @@ yum install -y mongodb-org
 mkdir -p ${mongoDbPath}
 chown -R mongod.mongod ${mongoDbPath}
 cp mongod.conf /etc/
-sed -i 's/dataMongoPath/${mongoDbPath/\//\\\/}/g' /etc/mongod.conf
+repl_mongoDbPath=${mongoDbPath//\//\\/}
+echo $repl_mongoDbPath
+sed -i "s/dataMongoPath/${repl_mongoDbPath}/g" /etc/mongod.conf
 
 # 初始化数据库的权限用户
 
